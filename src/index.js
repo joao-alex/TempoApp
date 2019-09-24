@@ -18,24 +18,18 @@ import bg from './assets/bg.png'
 
 const App = () => {
 
-  const [latitide,setLatitude] = useState("");
-  const [longitude,setLongitude] = useState("")
+  const [coords,setCoords] = useState([]);
   const [city,setCity] = useState("")
 
-  function findLocation(){
-    Geolocation.getCurrentPosition(position=>{
-      setLatitude(position.coords.latitude);
-      setLongitude(position.coords.longitude);
-      },error=> alert(error.message),{timeout:20000,maximumAge:1000}
-    );
-  }
 
   function openWeather(op){
     if(op==0)
       alert(city)
     else{
-      findLocation()
-      alert(latitide)
+      Geolocation.getCurrentPosition(position=>{
+        setCoords([position.coords.latitude,position.coords.longitude]);
+        },error=> alert(error.message),{timeout:20000,maximumAge:1000}
+      );
     }
   }
 
@@ -54,7 +48,7 @@ const App = () => {
           <TouchableOpacity style={styles.b1} onPress={()=>{openWeather(1)}}>
             <Text style={styles.t2}>Minha Localização</Text>
           </TouchableOpacity>
-          <Text>{latitide}</Text>
+          <Text>{coords}</Text>
         </ImageBackground>
       </SafeAreaView>
     </Fragment>
