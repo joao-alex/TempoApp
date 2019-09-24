@@ -48,7 +48,6 @@ const Home = ({navigation}) => {
           <TouchableOpacity style={styles.b1} onPress={()=>{openWeather(1)}}>
             <Text style={styles.t2}>Minha Localização</Text>
           </TouchableOpacity>
-          <Text>{coords}</Text>
         </ImageBackground>
       </SafeAreaView>
     </Fragment>
