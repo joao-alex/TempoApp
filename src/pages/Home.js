@@ -16,7 +16,7 @@ import Geolocation from '@react-native-community/geolocation'
 
 import bg from '../assets/bg.png'
 
-const Home = () => {
+const Home = ({navigation}) => {
 
   const [coords,setCoords] = useState([]);
   const [city,setCity] = useState("")
@@ -24,7 +24,7 @@ const Home = () => {
 
   function openWeather(op){
     if(op==0)
-      alert(city)
+      navigation.navigate('TempoByCity',{cidade:city});
     else{
       Geolocation.getCurrentPosition(position=>{
         setCoords([position.coords.latitude,position.coords.longitude]);
