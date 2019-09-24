@@ -14,7 +14,7 @@ import {
 import Geolocation from '@react-native-community/geolocation'
 
 
-import bg from './src/assets/bg.png'
+import bg from './assets/bg.png'
 
 const App = () => {
 
