@@ -11,14 +11,13 @@ import {
   TextInput
 } from 'react-native';
 
-import Geolocation from '@react-native-community/geolocation'
+
 
 
 import bg from '../assets/bg.png'
 
 const Home = ({navigation}) => {
 
-  const [coords,setCoords] = useState([]);
   const [city,setCity] = useState("")
 
 
@@ -26,10 +25,7 @@ const Home = ({navigation}) => {
     if(op==0)
       navigation.navigate('TempoByCity',{cidade:city});
     else{
-      Geolocation.getCurrentPosition(position=>{
-        setCoords([position.coords.latitude,position.coords.longitude]);
-        },error=> alert(error.message),{timeout:20000,maximumAge:1000}
-      );
+      navigation.navigate('TempoByLocation');
     }
   }
 
