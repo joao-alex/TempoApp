@@ -1,25 +1,37 @@
-import React,{Fragment} from 'react';
-import { SafeAreaView,Text,StyleSheet ,ImageBackground,StatusBar,TouchableOpacity} from 'react-native';
+import React,{Fragment,useState,useEffect} from 'react';
+import { SafeAreaView,Text,StyleSheet ,ImageBackground,StatusBar,TouchableOpacity,ActivityIndicator} from 'react-native';
 
 import bg from '../assets/bg.png'
 import api from '../services/api'
+import Header from '../components/Header'
 
 
 export default function TempoByCity({navigation}) {
   const cidade = navigation.getParam('cidade')
-  async function getPrevisao(){
-    const response = await api.get(`/weather/1.0/report.json?product=forecast_7days_simple&name=${cidade}&app_id=7rd3QaqjDYvrNjEBrRzm&app_code=dmVGpNKtkpDjt68N-k4XqA&language=pt-BR`)
-    console.log(response)
-  }
+  const [status,setStatus] = useState(false);
+  const [data,setData] = useState()
+
+  useEffect( () => {
+    async function getPrevisao(){
+      const response = await api.get(`/weather/1.0/report.json?product=forecast_7days_simple&name=${cidade}&app_id=7rd3QaqjDYvrNjEBrRzm&app_code=dmVGpNKtkpDjt68N-k4XqA&language=pt-BR`)
+      setStatus(true)
+      setData(response)
+    }
+
+    getPrevisao()
+		
+	}, [])
+
   return (
     <Fragment>
       <StatusBar barStyle="white-content" backgroundColor="#7087D2"/>
       <SafeAreaView>
         <ImageBackground source={bg} style={styles.back}>
-          <Text style={styles.t1}>{cidade}</Text>
-          <TouchableOpacity style={styles.b1} onPress={getPrevisao}>
-            <Text style={styles.t2}>Minha Localização</Text>
-          </TouchableOpacity>
+          {status ? (
+              <Header backFunction={()=>{navigation.navigate('Home')}}/>
+            ):(
+              <ActivityIndicator size="large" color="#dff"/>
+            )}
         </ImageBackground>
       </SafeAreaView>
     </Fragment>

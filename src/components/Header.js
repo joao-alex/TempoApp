@@ -1,18 +1,15 @@
 import React from 'react';
-import { View,StyleSheet } from 'react-native';
+import { View,StyleSheet,TouchableOpacity,Image } from 'react-native';
 
-import Icon from 'react-native-elements'
+import backArrow from '../assets/backArrow.png'
 
-// import { Container } from './styles';
 
-export default function Header(backFunction) {
+export default function Header(props) {
   return (
     <View style={styles.container}>
-      <Icon
-        name='arrow_back'
-        onPress={backFunction}
-        color='#dff'
-      />
+      <TouchableOpacity onPress={props.backFunction}>
+        <Image source={backArrow}/>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -23,5 +20,7 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     width:'100%',
     height:40,
-  }
+    paddingTop:10,
+    paddingLeft:10,
+  },
 })
