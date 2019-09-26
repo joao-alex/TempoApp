@@ -1,5 +1,5 @@
 import React from 'react';
-import { View,StyleSheet,TouchableOpacity,Image } from 'react-native';
+import { View,StyleSheet,TouchableOpacity,Image,Text } from 'react-native';
 
 import backArrow from '../assets/backArrow.png'
 
@@ -10,6 +10,8 @@ export default function Header(props) {
       <TouchableOpacity onPress={props.backFunction}>
         <Image source={backArrow}/>
       </TouchableOpacity>
+      <Text>{props.city}</Text>
+      <Image source={backArrow}/>
     </View>
   );
 }
@@ -22,5 +24,7 @@ const styles = StyleSheet.create({
     height:40,
     paddingTop:10,
     paddingLeft:10,
+    paddingRight:10,
+    justifyContent:'space-between'
   },
 })
