@@ -10,7 +10,7 @@ export default function Header(props) {
       <TouchableOpacity onPress={props.backFunction}>
         <Image source={backArrow}/>
       </TouchableOpacity>
-      <Text>{props.city}</Text>
+      <Text style={styles.t1}>{props.city}</Text>
       <Image source={backArrow}/>
     </View>
   );
@@ -26,5 +26,10 @@ const styles = StyleSheet.create({
     paddingLeft:10,
     paddingRight:10,
     justifyContent:'space-between'
+  },
+  t1:{
+    fontSize:30,
+    fontWeight:'bold',
+    color:'#dff',
   },
 })

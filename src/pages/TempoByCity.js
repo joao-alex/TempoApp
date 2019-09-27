@@ -9,13 +9,13 @@ import Header from '../components/Header'
 export default function TempoByCity({navigation}) {
   const cidade = navigation.getParam('cidade')
   const [status,setStatus] = useState(false);
-  const [data,setData] = useState()
+  const [data,setData] = useState({})
 
   useEffect( () => {
     async function getPrevisao(){
       const response = await api.get(`/weather/1.0/report.json?product=forecast_7days_simple&name=${cidade}&app_id=7rd3QaqjDYvrNjEBrRzm&app_code=dmVGpNKtkpDjt68N-k4XqA&language=pt-BR`)
+      setData(response.data)
       setStatus(true)
-      setData(response)
     }
 
     getPrevisao()
@@ -28,7 +28,10 @@ export default function TempoByCity({navigation}) {
       <SafeAreaView>
         <ImageBackground source={bg} style={styles.back}>
           {status ? (
-              <Header backFunction={()=>{navigation.navigate('Home')}}/>
+              <Header 
+                backFunction={()=>{navigation.navigate('Home')}}
+                city={data.dailyForecasts.forecastLocation.city}
+              />
             ):(
               <ActivityIndicator size="large" color="#dff"/>
             )}

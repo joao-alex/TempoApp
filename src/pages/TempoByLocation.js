@@ -8,8 +8,7 @@ import api from '../services/api'
 import Header from '../components/Header'
 
 export default function TempoByLocation({navigation}) {
-	var data,city
-
+  const [data,setData] = useState({})
 	const [status,setStatus] = useState(false);
 
 	useEffect( () => {
@@ -17,10 +16,12 @@ export default function TempoByLocation({navigation}) {
 		Geolocation.getCurrentPosition(position=>{
 			console.log(`/weather/1.0/report.json?product=forecast_7days_simple&latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&app_id=7rd3QaqjDYvrNjEBrRzm&app_code=dmVGpNKtkpDjt68N-k4XqA&language=pt-BR`)
 			async function getPrevisao(){
-				data = await api.get(`/weather/1.0/report.json?product=forecast_7days_simple&latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&app_id=7rd3QaqjDYvrNjEBrRzm&app_code=dmVGpNKtkpDjt68N-k4XqA&language=pt-BR`)
+				const response = await api.get(`/weather/1.0/report.json?product=forecast_7days_simple&latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&app_id=7rd3QaqjDYvrNjEBrRzm&app_code=dmVGpNKtkpDjt68N-k4XqA&language=pt-BR`)
+        console.log(response.data)
+        setData(response.data)
         setStatus(true)
 			}
-			getPrevisao()
+      getPrevisao()
 			},error=> alert(error.message),{timeout:20000,maximumAge:1000}
 		);
 		
@@ -35,7 +36,7 @@ export default function TempoByLocation({navigation}) {
 					{status ? (
             <Header 
               backFunction={()=>{navigation.navigate('Home')}}
-              city={"Teste"}
+              city={data.dailyForecasts.forecastLocation.city}
             />
 					):(
 						<ActivityIndicator size="large" color="#dff"/>
