@@ -1,22 +1,36 @@
 import React,{Fragment,useState,useEffect} from 'react';
-import { SafeAreaView,Text,StyleSheet ,ImageBackground,StatusBar,TouchableOpacity,ActivityIndicator,FlatList,View,ScrollView,Dimensions} from 'react-native';
+import { SafeAreaView,Text,StyleSheet ,ImageBackground,StatusBar,TouchableOpacity,Dimensions,ActivityIndicator,FlatList,View,ScrollView,Image} from 'react-native';
 
 import bg from '../assets/bg.png'
 import api from '../services/api'
 import Header from '../components/Header'
 
-
 export default function TempoByCity({navigation}) {
   const cidade = navigation.getParam('cidade')
   const [status,setStatus] = useState(false);
-  const [data,setData] = useState({})
+  const [data,setData] = useState({});
+  const [visibleDays,setVisibleDays] = useState([false,false,false,false,false,false])
+  const [refresh,setRefresh] = useState(false);
+  const [atual,setAtual]=useState({});
+  
+  function handleDays(index){
+    var aux=visibleDays;
+    if(aux[index])
+      aux[index]=false;
+    else aux[index]=true;
+    setVisibleDays(aux)
+    if(refresh)
+      setRefresh(false)
+    else setRefresh(true)
+  }
 
 
   useEffect( () => {
     async function getPrevisao(){
-      const response = await api.get(`/weather/1.0/report.json?product=forecast_7days_simple&name=${cidade}&app_id=7rd3QaqjDYvrNjEBrRzm&app_code=dmVGpNKtkpDjt68N-k4XqA&language=pt-BR`)
+      var response = await api.get(`/weather/1.0/report.json?product=forecast_7days_simple&name=${cidade}&app_id=7rd3QaqjDYvrNjEBrRzm&app_code=dmVGpNKtkpDjt68N-k4XqA&language=pt-BR`)
       setData(response.data)
-      console.log(response.data)
+      response = await api.get(`/weather/1.0/report.json?product=observation&name=${cidade}&app_id=7rd3QaqjDYvrNjEBrRzm&app_code=dmVGpNKtkpDjt68N-k4XqA&language=pt-BR`)
+      setAtual(response.data)
       setStatus(true)
     }
 
@@ -32,25 +46,26 @@ export default function TempoByCity({navigation}) {
           {status ? (
               <ScrollView>
                 <View style={styles.container}>
+                  <View style={styles.atual}>
+                    <Text style={styles.t1}>Atual: {parseInt(atual.observations.location[0].observation[0].temperature)}°</Text>
+                    <Text style={styles.t1}>Mín: {parseInt(atual.observations.location[0].observation[0].lowTemperature)}° | Máx: {parseInt(atual.observations.location[0].observation[0].highTemperature)}°</Text>
+                    <Text style={styles.t1}>{atual.observations.location[0].observation[0].description}</Text>
+                  </View>
                   <FlatList
                     data={data.dailyForecasts.forecastLocation.forecast}
                     renderItem={({item,index})=>(
-                      <View style={styles.container}>
-                        { index == 0 ? (<>
-                          <Text>{item.weekday}</Text>
-                        </>)  
-                        : (<>                       
-                          <TouchableOpacity style={styles.b1}>
-                            <Text style={styles.t2}>{item.weekday}</Text>
-                          </TouchableOpacity>
-                        </>) }
-                        <Text style={styles.t1}> ─────── </Text>
+                      <View style={styles.container}>  
+                        <Text style={styles.t1}> ─────── </Text>            
+                        <TouchableOpacity style={styles.b1} onPress={()=>handleDays(index-1)}>
+                          <Text style={styles.t2}>{item.weekday.toUpperCase()}</Text>
+                        </TouchableOpacity>
+                        {visibleDays[index-1]?<Text>Ativo</Text>: <Text>Desativo</Text>}
                       </View>
                     )}
                     keyExtractor={(item) => item.weekday}
+                    extraData={refresh}
                   />
                 </View>
-
               </ScrollView>
             )
             :(
@@ -86,13 +101,14 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
     color:'#dff',
     paddingBottom:5,
+    textAlign:'center',
   },
   b1:{
     flex:1,
     backgroundColor:"#dff",
     alignItems:'center',
     justifyContent:'center',
-    width:(Dimensions.get('window').width-(Dimensions.get('window').width*0.2)),
+    width:(Dimensions.get('window').width-(Dimensions.get('window').width*0.1)),
     height:60,
     borderColor:'#dff',
     borderWidth:0,
@@ -104,5 +120,13 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
     color:'#57ACE5',
     paddingBottom:30,
+  },
+  atual:{
+    flex:1,
+    alignItems:'center',
+    borderColor:'#dff',
+    borderWidth:2,
+    borderRadius:10,
+    width:(Dimensions.get('window').width-(Dimensions.get('window').width*0.1)),
   },
 });
