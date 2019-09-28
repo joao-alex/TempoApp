@@ -21,11 +21,12 @@ const styles = StyleSheet.create({
     flex:1,
     flexDirection:'row',
     width:'100%',
-    height:40,
     paddingTop:10,
     paddingLeft:10,
     paddingRight:10,
-    justifyContent:'space-between'
+    justifyContent:'space-between',
+    borderWidth:2,
+    borderColor:'red'
   },
   t1:{
     fontSize:30,
