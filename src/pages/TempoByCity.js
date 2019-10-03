@@ -14,7 +14,7 @@ export default function TempoByCity({navigation}) {
   const [atual,setAtual]=useState({});
   
   function handleDays(index){
-    var aux=visibleDays;
+    let aux=visibleDays;
     if(aux[index])
       aux[index]=false;
     else aux[index]=true;
@@ -27,7 +27,7 @@ export default function TempoByCity({navigation}) {
 
   useEffect( () => {
     async function getPrevisao(){
-      var response = await api.get(`/weather/1.0/report.json?product=forecast_7days_simple&name=${cidade}&app_id=7rd3QaqjDYvrNjEBrRzm&app_code=dmVGpNKtkpDjt68N-k4XqA&language=pt-BR`)
+      let response = await api.get(`/weather/1.0/report.json?product=forecast_7days_simple&name=${cidade}&app_id=7rd3QaqjDYvrNjEBrRzm&app_code=dmVGpNKtkpDjt68N-k4XqA&language=pt-BR`)
       setData(response.data)
       response = await api.get(`/weather/1.0/report.json?product=observation&name=${cidade}&app_id=7rd3QaqjDYvrNjEBrRzm&app_code=dmVGpNKtkpDjt68N-k4XqA&language=pt-BR`)
       setAtual(response.data)
@@ -59,7 +59,13 @@ export default function TempoByCity({navigation}) {
                         <TouchableOpacity style={styles.b1} onPress={()=>handleDays(index-1)}>
                           <Text style={styles.t2}>{item.weekday.toUpperCase()}</Text>
                         </TouchableOpacity>
-                        {visibleDays[index-1]?<Text>Ativo</Text>: <Text>Desativo</Text>}
+                        {visibleDays[index-1] && (
+                          <View style={styles.atual}>
+                            <Text style={styles.t1}>Chuva: {item.rainFall!=="*" ? parseFloat(item.rainFall)*10 : 0} mm</Text>
+                            <Text style={styles.t1}>Mín: {parseInt(item.lowTemperature)}° | Máx: {parseInt(item.highTemperature)}°</Text>
+                            <Text style={styles.t1}>{item.description}</Text>
+                          </View>
+                        ) }
                       </View>
                     )}
                     keyExtractor={(item) => item.weekday}
