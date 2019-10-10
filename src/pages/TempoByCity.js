@@ -61,7 +61,7 @@ export default function TempoByCity({navigation}) {
                         </TouchableOpacity>
                         {visibleDays[index-1] && (
                           <View style={styles.atual}>
-                            <Text style={styles.t1}>Chuva: {item.rainFall!=="*" ? parseFloat(item.rainFall)*10 : 0} mm</Text>
+                            <Text style={styles.t1}>Chuva: {item.rainFall!=="*" ? (parseFloat(item.rainFall)*10).toFixed(2) : 0} mm</Text>
                             <Text style={styles.t1}>Mín: {parseInt(item.lowTemperature)}° | Máx: {parseInt(item.highTemperature)}°</Text>
                             <Text style={styles.t1}>{item.description}</Text>
                           </View>
