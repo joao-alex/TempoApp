@@ -51,6 +51,7 @@ export default function TempoByLocation({navigation}) {
               <ScrollView>
                 <View style={styles.container}>
                   <View style={styles.atual}>
+                    <Image source={{uri:atual.observations.location[0].observation[0].iconLink}} style={{width:51}}/>
                     <Text style={styles.t1}>Atual: {parseInt(atual.observations.location[0].observation[0].temperature)}°</Text>
                     <Text style={styles.t1}>Mín: {parseInt(atual.observations.location[0].observation[0].lowTemperature)}° | Máx: {parseInt(atual.observations.location[0].observation[0].highTemperature)}°</Text>
                     <Text style={styles.t1}>{atual.observations.location[0].observation[0].description}</Text>
