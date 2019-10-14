@@ -51,7 +51,7 @@ export default function TempoByLocation({navigation}) {
               <ScrollView>
                 <View style={styles.container}>
                   <View style={styles.atual}>
-                    <Image source={{uri:atual.observations.location[0].observation[0].iconLink}} style={{width:51}}/>
+                    <Image source={{uri:atual.observations.location[0].observation[0].iconLink}} style={{width:100,height:100}}/>
                     <Text style={styles.t1}>Atual: {parseInt(atual.observations.location[0].observation[0].temperature)}°</Text>
                     <Text style={styles.t1}>Mín: {parseInt(atual.observations.location[0].observation[0].lowTemperature)}° | Máx: {parseInt(atual.observations.location[0].observation[0].highTemperature)}°</Text>
                     <Text style={styles.t1}>{atual.observations.location[0].observation[0].description}</Text>
@@ -66,6 +66,7 @@ export default function TempoByLocation({navigation}) {
                         </TouchableOpacity>
                         {visibleDays[index-1] && (
                           <View style={styles.atual}>
+                            <Image source={{uri:item.iconLink}} style={{width:100,height:100}}/>
                             <Text style={styles.t1}>Chuva: {item.rainFall!=="*" ? Math.round(parseFloat(item.rainFall*25.4)) : 0} mm</Text>
                             <Text style={styles.t1}>Mín: {parseInt(item.lowTemperature)}° | Máx: {parseInt(item.highTemperature)}°</Text>
                             <Text style={styles.t1}>{item.description}</Text>
