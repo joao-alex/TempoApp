@@ -44,10 +44,11 @@ export default function TempoByLocation({navigation}) {
 
   return (
     <Fragment>
-      <StatusBar barStyle="white-content" backgroundColor="#7087D2"/>
-      <SafeAreaView>
+      <StatusBar barStyle="light-content" backgroundColor="#7087D2"/>
+      <View>
         <ImageBackground source={bg} style={styles.back}>
-          {status ? (
+          <SafeAreaView>
+            {status ? (
               <ScrollView>
                 <View style={styles.container}>
                   <View style={styles.atual}>
@@ -60,7 +61,7 @@ export default function TempoByLocation({navigation}) {
                     data={data.dailyForecasts.forecastLocation.forecast}
                     renderItem={({item,index})=>(
                       <View style={styles.container}>  
-                        <Text style={styles.t1}> ─────── </Text>            
+                        <Text style={styles.t1}> ───────</Text>            
                         <TouchableOpacity style={styles.b1} onPress={()=>handleDays(index-1)}>
                           <Text style={styles.t2}>{item.weekday.toUpperCase()}</Text>
                         </TouchableOpacity>
@@ -86,8 +87,10 @@ export default function TempoByLocation({navigation}) {
               </View> 
             )
             }
+          </SafeAreaView>
+          
         </ImageBackground>
-      </SafeAreaView>
+      </View>
     </Fragment>
   );
 }
@@ -129,10 +132,8 @@ const styles = StyleSheet.create({
   },
   t2:{
     fontSize:30,
-    paddingTop:30,
     fontWeight:'bold',
     color:'#57ACE5',
-    paddingBottom:30,
   },
   atual:{
     flex:1,

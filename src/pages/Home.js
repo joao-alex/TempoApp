@@ -3,6 +3,7 @@
 import React, {Fragment,useState} from 'react';
 import {
   SafeAreaView,
+  View,
   StyleSheet,
   TouchableOpacity,
   Text,
@@ -31,8 +32,8 @@ const Home = ({navigation}) => {
 
   return (
     <Fragment>
-      <StatusBar barStyle="white-content" backgroundColor="#7087D2"/>
-      <SafeAreaView>
+      <View>
+        <StatusBar barStyle="light-content" backgroundColor="#7087D2"/>
         <ImageBackground source={bg} style={styles.back}>
           <TextInput placeholder="Informe a cidade" style={styles.input} 
             onChangeText={setCity}
@@ -45,7 +46,7 @@ const Home = ({navigation}) => {
             <Text style={styles.t2}>Minha Localização</Text>
           </TouchableOpacity>
         </ImageBackground>
-      </SafeAreaView>
+      </View>
     </Fragment>
   );
 };

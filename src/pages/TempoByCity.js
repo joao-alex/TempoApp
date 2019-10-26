@@ -40,9 +40,10 @@ export default function TempoByCity({navigation}) {
 
   return (
     <Fragment>
-      <StatusBar barStyle="white-content" backgroundColor="#7087D2"/>
-      <SafeAreaView>
+      <View>
+        <StatusBar barStyle="light-content" backgroundColor="#7087D2"/>
         <ImageBackground source={bg} style={styles.back}>
+          <SafeAreaView>
           {status ? (
               <ScrollView>
                 <View style={styles.container}>
@@ -80,8 +81,9 @@ export default function TempoByCity({navigation}) {
               </View> 
             )
             }
+          </SafeAreaView>
         </ImageBackground>
-      </SafeAreaView>
+      </View>
     </Fragment>
   );
 }
@@ -122,10 +124,8 @@ const styles = StyleSheet.create({
   },
   t2:{
     fontSize:30,
-    paddingTop:30,
     fontWeight:'bold',
     color:'#57ACE5',
-    paddingBottom:30,
   },
   atual:{
     flex:1,
